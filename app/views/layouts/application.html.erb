@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TrelloTrack</title>
+    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body id="<%= controller_name %>">
+
+    <div id="wrap">
+
+      <%= render 'layouts/header' %>
+
+
+      <div id="main">
+        <div class="container">
+
+          <%= yield %>
+
+        </div>
+      </div>
+
+    </div>
+
+    <%= render 'layouts/footer' %>
+
+  </body>
+</html>
+

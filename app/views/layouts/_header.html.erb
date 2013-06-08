@@ -1,0 +1,45 @@
+<header>
+
+
+  <!-- Navbar -->
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <%= link_to 'Trello Track'.html_safe, '/', class: 'brand' %>
+        <ul class="nav">
+          <li <%='class="active"'.html_safe if controller_name == 'reporting' %>><%= link_to 'Reporting', daily_path %></li>
+          <li <%='class="active"'.html_safe if controller_name == 'settings' or controller_name == 'users' %>><%= link_to 'Settings', settings_path %></li>
+        </ul>
+        <ul class="nav pull-right">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><%= gravatar_image_tag(current_user.email, gravatar: { size: 35 }, class: 'gravatar') %> <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="nav-header"><%= current_user.name %></li>
+              <li class="divider"></li>
+              <li><%= link_to 'Sign Out', logout_path %></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Subnav -->
+  <div class="subnav subnav-fixed">
+    <ul class="nav nav-pills">
+        <% if controller_name == 'reporting' %>
+          <li <%='class="active"'.html_safe if controller.action_name == 'daily' %>><%= link_to 'Daily', daily_path %></li>
+          <li <%='class="active"'.html_safe if controller.action_name == 'weekly' %>><%= link_to 'Weekly', weekly_path %></li>
+          <li <%='class="active"'.html_safe if controller.action_name == 'monthly' %>><%= link_to 'Monthly', monthly_path %></li>
+          <li <%='class="active"'.html_safe if controller.action_name == 'custom' %>><%= link_to 'Custom', custom_path %></li>
+        <% end %>
+        <% if controller_name == 'settings' or controller_name == 'users' %>
+          <li <%='class="active"'.html_safe if controller.action_name == 'index' and controller_name == 'settings' %>><%= link_to 'Application', settings_path %></li>
+          <li <%='class="active"'.html_safe if controller.action_name == 'index' and controller_name == 'users' %>><%= link_to 'Users', users_path %></li>
+        <% end %>
+    </ul>
+  </div>
+
+
+</header>

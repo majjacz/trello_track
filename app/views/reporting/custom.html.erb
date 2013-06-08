@@ -1,0 +1,31 @@
+<!-- Primary menu with the datetime, days control, calendar and user -->
+<div class="container row">
+
+  <div class="span8">
+    <h4 class="inline-date-label">From:</h4>
+    <div id="calendar_input_from" class="input-append date pull-left">
+      <input type="text" value="<%= @start_time.strftime('%d.%m.%Y') %>" class="span2"><span class="add-on"><i class="icon-th"></i></span>
+    </div>
+    <h4 class="inline-date-label" style="margin-left: 25px;">To:</h4>
+    <div id="calendar_input_to" class="input-append date pull-left">
+      <input type="text" value="<%= @end_time.strftime('%d.%m.%Y') %>" class="span2"><span class="add-on"><i class="icon-th"></i></span>
+    </div>
+  </div>
+
+ <nav class="span5 pull-right" id="timesheet-controls">
+
+    <ul class="pager span2 pull-right">
+      <li></li>
+    </ul>
+
+    <div class="pull-right">
+
+
+
+    </div>
+
+  </nav>
+
+</div>
+
+<h4 style="text-align: center">There are no records between<br><%= @start_time.strftime('%d.%m.%Y, %H:%M') %><br>and<br><%= @end_time.strftime('%d.%m.%Y, %H:%M') %></h4>

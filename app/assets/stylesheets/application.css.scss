@@ -1,0 +1,14 @@
+@import "partials/bootstrap-overrided-variables";
+@import "bootswatch/cerulean/variables";
+@import "bootstrap";
+@import "bootswatch/cerulean/bootswatch";
+@import "font-awesome";
+@import "partials/bootswatch.subnav";
+@import "partials/bootstrap.stickyfooter";
+@import "bootstrap-datepicker";
+
+@import "partials/header";
+@import "partials/footer";
+@import "partials/main";
+
+@import "*"

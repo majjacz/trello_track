@@ -1,0 +1,37 @@
+<!-- Primary menu with the datetime, days control, calendar and user -->
+<div class="container row">
+
+  <div class="pagination span5">
+    <h2 class="pull-left"><%= @date.advance({:days => +4}).strftime("Week %V, %Y") %></h2>
+    <h4 class="pull-left" style="margin-top: -13px">(<%= @start_time.strftime("%d %b %Y") %> - <%= @end_time.strftime("%d %b %Y") %>)<h4>
+  </div>
+
+ <nav class="span5 pull-right" id="timesheet-controls">
+
+    <ul class="pager span2 pull-right">
+      <li><a id="calendar_button_weekly" href='#' class="icon-calendar" data-date-format="yyyy-mm-dd" data-date="<%= @date.strftime("%Y-%m-%d") %>"></a></li>
+    </ul>
+
+    <div class="pagination pull-right">
+
+      <ul>
+          <li class="previous">
+            <% last_week = @date.advance({:weeks => -1, :days => +4})%>
+            <%= link_to '', weekly_url({year: last_week.year, week: last_week.cweek}), class: 'icon-arrow-left' %>
+          </li>
+          <li<%= ' class="active"'.html_safe if @date.to_date == Time.zone.now.to_date %>>
+            <%= link_to 'This week', weekly_url %>
+          </li>
+          <li class="next">
+            <% next_week = @date.advance({:weeks => +1, :days => +4}) %>
+            <%= link_to '', weekly_url({year: next_week.year, week: next_week.cweek}), class: 'icon-arrow-right' %>
+          </li>
+      </ul>
+
+    </div>
+
+  </nav>
+
+</div>
+
+<h4 style="text-align: center">There are no records between<br><%= @start_time.strftime('%d.%m.%Y, %H:%M') %><br>and<br><%= @end_time.strftime('%d.%m.%Y, %H:%M') %></h4>

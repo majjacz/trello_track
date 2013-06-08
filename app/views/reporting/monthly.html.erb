@@ -1,0 +1,34 @@
+<!-- Primary menu with the datetime, days control, calendar and user -->
+<div class="container row">
+
+  <div class="pagination span5">
+    <h2 class="pull-left"><%= @date.strftime("%B, %Y") %></h2>
+  </div>
+
+ <nav class="span5 pull-right" id="timesheet-controls">
+
+    <ul class="pager span2 pull-right">
+      <li><a id="calendar_button_monthly" href='#' class="icon-calendar" data-date-format="yyyy-mm-dd" data-date="<%= @date.strftime("%Y-%m-%d") %>"></a></li>
+    </ul>
+
+    <div class="pagination pull-right">
+
+      <ul>
+          <li class="previous">
+            <%= link_to '', monthly_url({year: @date.last_month.year, month: @date.last_month.month}), class: 'icon-arrow-left' %>
+          </li>
+          <li<%= ' class="active"'.html_safe if @date.to_date == Time.zone.now.to_date %>>
+            <%= link_to 'This month', monthly_url %>
+          </li>
+          <li class="next">
+            <%= link_to '', monthly_url({year: @date.next_month.year, month: @date.next_month.month}), class: 'icon-arrow-right' %>
+          </li>
+      </ul>
+
+    </div>
+
+  </nav>
+
+</div>
+
+<h4 style="text-align: center">There are no records between<br><%= @start_time.strftime('%d.%m.%Y, %H:%M') %><br>and<br><%= @end_time.strftime('%d.%m.%Y, %H:%M') %></h4>
