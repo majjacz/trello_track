@@ -17,7 +17,7 @@
           <li class="previous">
             <%= link_to '', monthly_url({year: @date.last_month.year, month: @date.last_month.month}), class: 'icon-arrow-left' %>
           </li>
-          <li<%= ' class="active"'.html_safe if @date.to_date == Time.zone.now.to_date %>>
+          <li<%= ' class="active"'.html_safe if @date.to_date.month == Time.zone.now.to_date.month %>>
             <%= link_to 'This month', monthly_url %>
           </li>
           <li class="next">

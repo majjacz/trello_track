@@ -19,7 +19,7 @@
             <% last_week = @date.advance({:weeks => -1, :days => +4})%>
             <%= link_to '', weekly_url({year: last_week.year, week: last_week.cweek}), class: 'icon-arrow-left' %>
           </li>
-          <li<%= ' class="active"'.html_safe if @date.to_date == Time.zone.now.to_date %>>
+          <li<%= ' class="active"'.html_safe if @date.to_date.cweek == Time.zone.now.to_date.cweek %>>
             <%= link_to 'This week', weekly_url %>
           </li>
           <li class="next">
