@@ -6,24 +6,10 @@
 </p>
 
 <p>
-  <strong>Surname:</strong>
-  <%= @user.surname %>
-</p>
-
-<p>
   <strong>Email:</strong>
   <%= @user.email %>
 </p>
 
 <p>
-  <strong>Provider:</strong>
-  <%= @user.provider %>
+<pre><%= @user.oauth_hash.to_yaml.gsub('\n', '<br>').html_safe %></pre>
 </p>
-
-<p>
-  <strong>Uid:</strong>
-  <%= @user.uid %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
