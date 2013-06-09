@@ -5,7 +5,8 @@ class ReportingController < ApplicationController
     if params[:year].present? and params[:month].present? and params[:day].present?
       @date = Time.zone.parse("#{params[:year]}-#{params[:month]}-#{params[:day]}").to_datetime.in_time_zone
       @start_time = @date.beginning_of_day
-      @end_time = @date.end_of_day
+      @end_time = @start_time + 1.day
+      @human_end_time = @date.end_of_day
       prepare
     else
       date = Time.zone.now
@@ -20,7 +21,8 @@ class ReportingController < ApplicationController
     if params[:year].present? and params[:week].present?
       @date = Date.commercial(params[:year].to_i, params[:week].to_i).to_datetime.in_time_zone
       @start_time = @date.beginning_of_week.beginning_of_day
-      @end_time = @date.end_of_week.end_of_day
+      @end_time = @start_time + 1.week
+      @human_end_time = @date.end_of_week.end_of_day
       prepare
     else
       date = Time.zone.now.to_date
@@ -35,7 +37,8 @@ class ReportingController < ApplicationController
     if params[:year].present? and params[:month].present?
       @date = Time.zone.parse("#{params[:year]}-#{params[:month]}-1").to_datetime.in_time_zone
       @start_time = @date.to_time.in_time_zone
-      @end_time = @date.to_time.in_time_zone.end_of_month.end_of_day
+      @end_time = @start_time + 1.month
+      @human_end_time = @date.end_of_month.end_of_day
       prepare
     else
       date = Time.zone.now
@@ -47,8 +50,9 @@ class ReportingController < ApplicationController
   def custom
 
     if params[:year_from].present? and params[:month_from].present? and params[:day_from].present? and params[:year_to].present? and params[:month_to].present? and params[:day_to].present?
-      @start_time = Time.zone.parse("#{params[:year_from]}-#{params[:month_from]}-#{params[:day_from]}").to_time.in_time_zone
-      @end_time = Time.zone.parse("#{params[:year_to]}-#{params[:month_to]}-#{params[:day_to]}").to_time.in_time_zone.end_of_day
+      @start_time = Time.zone.parse("#{params[:year_from]}-#{params[:month_from]}-#{params[:day_from]}").to_datetime.in_time_zone
+      @end_time = Time.zone.parse("#{params[:year_to]}-#{params[:month_to]}-#{params[:day_to]}").to_datetime.in_time_zone.beginning_of_day + 1.day
+      @human_end_time = @end_time - 1.seconds
       prepare
     else
       date = Time.zone.now

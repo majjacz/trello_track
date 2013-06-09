@@ -3,7 +3,7 @@
 
   <div class="pagination span5">
     <h2 class="pull-left"><%= @date.advance({:days => +4}).strftime("Week %V, %Y") %></h2>
-    <h4 class="pull-left" style="margin-top: -13px">(<%= @start_time.strftime("%d %b %Y") %> - <%= @end_time.strftime("%d %b %Y") %>)<h4>
+    <h4 class="pull-left" style="margin-top: -13px">(<%= @start_time.strftime("%d %b %Y") %> - <%= @human_end_time.strftime("%d %b %Y") %>)<h4>
   </div>
 
  <nav class="span5 pull-right" id="timesheet-controls">

@@ -5,7 +5,7 @@ module ApplicationHelper
   end
 
   def format_with_day(time, start_time, end_time)
-    start_time.day == end_time.day ? time.strftime("%H:%M") : time.strftime("%H:%M (%a)")
+    start_time.day == (end_time - 1.seconds).day ? time.strftime("%H:%M") : time.strftime("%H:%M (%a)")
   end
 
 end

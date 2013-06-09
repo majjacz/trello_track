@@ -1,4 +1,7 @@
 class TimeRecord < ActiveRecord::Base
+
+  validates :paused_for, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }
+
   belongs_to :user
 
   scope :between, lambda { |start_time, end_time| where("
