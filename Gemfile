@@ -8,10 +8,10 @@ gem 'jbuilder'
 gem 'therubyracer', :platforms => :ruby
 gem 'omniauth'
 gem 'omniauth-trello'
-
+gem 'ruby-trello'
 gem 'gravatar_image_tag', '~> 1.1.3'
 gem 'simple_form', '~> 3.0.0.rc'
-
+gem 'time_diff'
 
 gem 'jquery-turbolinks'
 gem 'sass-rails',   '~> 4.0.0.rc1'
@@ -29,6 +29,9 @@ group :development, :test do
   gem 'debugger'
   gem 'thin'
   gem 'quiet_assets'
+  gem 'wirble', '~> 0.1.3' # improves rails console
+  gem 'hirb', '~> 0.7.1' # improves rails console
+  gem 'awesome_print', '~> 1.0.2' # improves rails console
 end
 
 group :doc do

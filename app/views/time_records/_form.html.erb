@@ -1,0 +1,22 @@
+<%= simple_form_for(@time_record, :html => { :class => 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :name %>
+    <%= f.input :trello_board_id %>
+    <%= f.input :trello_card_id %>
+    <%= f.input :start_time %>
+    <%= f.input :end_time unless @time_record.end_time.nil?%>
+    <%= f.input :paused_for %>
+  </div>
+
+  <div class="form-actions">
+    <% if @time_record.end_time.nil? and not @time_record.paused %>
+      <h4 style="float: left; margin-right: 20px;">Time recording in progress</h4>
+    <% elsif @time_record.paused %>
+      <h4 style="float: left; margin-right: 20px;">Time recording paused</h4>
+    <% else %>
+      <%= f.button :submit %>
+    <% end %>
+  </div>
+<% end %>

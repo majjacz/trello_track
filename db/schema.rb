@@ -11,7 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130608175137) do
+ActiveRecord::Schema.define(version: 20130608230033) do
+
+  create_table "time_records", force: true do |t|
+    t.integer  "user_id",                         null: false
+    t.string   "trello_board_id",                 null: false
+    t.string   "trello_card_id",                  null: false
+    t.string   "name",                            null: false
+    t.datetime "start_time",                      null: false
+    t.datetime "end_time"
+    t.boolean  "paused",          default: false
+    t.integer  "paused_for",      default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "time_records", ["user_id"], name: "index_time_records_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name"
@@ -21,6 +36,7 @@ ActiveRecord::Schema.define(version: 20130608175137) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "oauth_hash"
+    t.string   "auth_token"
   end
 
 end

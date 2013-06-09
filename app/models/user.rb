@@ -1,7 +1,16 @@
+require 'trello'
+
 class User < ActiveRecord::Base
+  has_many :time_records
 
   def self.from_omniauth(auth)
-    where(auth.slice("provider", "uid")).first || create_from_omniauth(auth)
+    user = where(auth.slice("provider", "uid")).first
+    unless user.nil?
+      user.oauth_hash = auth
+      user.save!
+    end
+    user = create_from_omniauth(auth) if user.nil?
+    return user
   end
 
   def self.create_from_omniauth(auth)
@@ -12,6 +21,21 @@ class User < ActiveRecord::Base
       user.name = auth["info"]["name"]
       user.oauth_hash = auth
     end
+  end
+
+  def oauth_hash_yaml
+    @oauth_hash_yaml ||= YAML::load(oauth_hash)
+  end
+
+  include Trello
+  #usage: @user.trello_api.find(:cards, Time_record.first.trello_card_id).name
+  def trello_api
+    @trello ||= Trello::Client.new(
+              :consumer_key => ENV['TRELLO_KEY'],
+              :consumer_secret => ENV['TRELLO_SECRET'],
+              :oauth_token => oauth_hash_yaml['extra']['access_token'].token,
+              :oauth_token_secret => oauth_hash_yaml[:extra][:access_token].secret
+             )
   end
 
 end
