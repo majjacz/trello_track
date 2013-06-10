@@ -3,6 +3,10 @@ require 'trello'
 class User < ActiveRecord::Base
   has_many :time_records
 
+  def self.from_api_key(apikey)
+    where(:api_key => apikey).first
+  end
+
   def self.from_omniauth(auth)
     user = where(auth.slice("provider", "uid")).first
     unless user.nil?
@@ -20,6 +24,7 @@ class User < ActiveRecord::Base
       user.email = auth["info"]["email"]
       user.name = auth["info"]["name"]
       user.oauth_hash = auth
+      user.api_key = SecureRandom.hex
     end
   end
 

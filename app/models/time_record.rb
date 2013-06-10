@@ -11,18 +11,24 @@ class TimeRecord < ActiveRecord::Base
          }
 
   def human_total_time_capped_by(start_time, end_time)
-    Time.diff(end_time_capped_by(end_time), start_time_capped_by(start_time) + paused_for.seconds)
+    if self.end_time
+      Time.diff(end_time_capped_by(end_time), start_time_capped_by(start_time) + paused_for.seconds)
+    end
   end
 
   def total_time_capped_by(start_time, end_time)
-    end_time_capped_by(end_time) - start_time_capped_by(start_time) - paused_for
+    if self.end_time
+      end_time_capped_by(end_time) - start_time_capped_by(start_time) - paused_for
+    end
   end
 
   def end_time_capped_by(time)
-    if end_time >= time
-      return time
-    else
-      return end_time
+    if end_time
+      if end_time >= time
+        return time
+      else
+        return end_time
+      end
     end
   end
 
@@ -35,7 +41,9 @@ class TimeRecord < ActiveRecord::Base
   end
 
   def over(time)
-    start_time <= time and end_time >= time
+    if end_time
+      start_time <= time and end_time >= time
+    end
   end
 
 end
