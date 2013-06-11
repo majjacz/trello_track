@@ -40,6 +40,9 @@ GEM
       sass (~> 3.2)
     bootswatch-rails (0.5.0)
       railties (>= 3.1)
+    browser-timezone-rails (0.0.6)
+      jquery-rails
+      rails (>= 3.1)
     builder (3.1.4)
     callsite (0.0.11)
     coderay (1.0.9)
@@ -194,6 +197,7 @@ DEPENDENCIES
   bootstrap-datepicker-rails
   bootstrap-sass
   bootswatch-rails
+  browser-timezone-rails
   coffee-rails (~> 4.0.0)
   debugger
   font-awesome-sass-rails

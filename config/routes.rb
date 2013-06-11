@@ -16,17 +16,21 @@ TrelloTrack::Application.routes.draw do
 
   get 'settings' => 'settings#index', as: :settings
 
-  namespace :api, defaults: {format: 'json'} do
-    get '/timer' => 'timer#in_progress'
-  end
-
-
-  resources :time_records, :only => [:edit, :update] do
+  resources :time_records, :only => [:edit, :update, :destroy] do
     member do
       post 'stop'
       post 'pause'
       post 'continue_from_pause'
     end
   end
+
+  namespace :api, defaults: {format: 'json'} do
+    get '/timer' => 'timer#in_progress'
+    post '/timer/create' => 'timer#create'
+    post '/timer/stop' => 'timer#stop'
+    post '/timer/pause' => 'timer#pause'
+    post '/timer/continue' => 'timer#continue_from_pause'
+  end
+
 
 end

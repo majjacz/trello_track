@@ -1,38 +1,16 @@
 class TimeRecordsController < ApplicationController
   before_action :set_time_record, only: [:stop, :pause, :continue_from_pause, :edit, :update, :destroy]
 
-  def index
-    @time_records = TimeRecord.all
-  end
-
-  def new
-    @time_record = TimeRecord.new
-  end
-
   def edit
   end
 
   def stop
-    @time_record.end_time = Time.zone.now
-    @time_record.save!
-    redirect_to :action => 'edit'
   end
 
   def pause
-    @time_record.end_time = Time.zone.now
-    @time_record.paused = true
-    @time_record.save!
-    redirect_to :action => 'edit'
   end
 
   def continue_from_pause
-    if @time_record.paused
-      @time_record.paused_for = @time_record.paused_for + Time.zone.now - @time_record.end_time
-    end
-    @time_record.end_time = nil
-    @time_record.paused = false
-    @time_record.save!
-    redirect_to :action => 'edit'
   end
 
   def create

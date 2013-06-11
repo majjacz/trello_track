@@ -17,5 +17,6 @@
 //= require moment
 //= require bootstrap
 //= require bootstrap-datepicker
+//= require browser_timezone_rails/application.js
 //= require_tree .
 //= require turbolinks
