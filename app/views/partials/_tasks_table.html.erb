@@ -1,5 +1,5 @@
-<% if @records.empty? %>
-  <h4 style="text-align: center">There are no records between<br>
+<% if @tasks.empty? %>
+  <h4 style="text-align: center">There are no tasks between<br>
     <%= @start_time.strftime('%d.%m.%Y, %H:%M') %><br>
     and<br>
     <%= @human_end_time.strftime('%d.%m.%Y, %H:%M') %>
@@ -18,7 +18,7 @@
 
     <tbody>
 
-      <% @records.each do |record| %>
+      <% @tasks.each do |task| %>
         <tr>
 
           <td class="row-fluid span6">
@@ -26,7 +26,7 @@
               <li>
                 <blockquote class="pull-left">
                   <p class="pull-left">
-                    <%= record.name %>
+                    <%= task.name %>
                   </p>
                 </blockquote>
               </li>
@@ -37,14 +37,14 @@
             <div class="row-fluid span12">
               <blockquote>
                 <h5 class="started_at">
-                  <%= '<span class="icon-arrow-left" title="Activity continues..."></span>'.html_safe if record.over(@start_time) %>
-                  <%= format_with_day(record.start_time_capped_by(@start_time), record.start_time_capped_by(@start_time), record.end_time_capped_by(@end_time)) %>
+                  <%= '<span class="icon-arrow-left" title="Activity continues..."></span>'.html_safe if task.over(@start_time) %>
+                  <%= format_with_day(task.start_time_capped_by(@start_time), task.start_time_capped_by(@start_time), task.end_time_capped_by(@end_time)) %>
                 </h5>
               </blockquote>
               <blockquote>
                 <h5 class="ended_at">
-                  <%= (format_with_day(record.end_time_capped_by(@end_time), record.start_time_capped_by(@start_time), record.end_time_capped_by(@end_time))) unless record.end_time.nil? %>
-                  <%= '<span class="icon-arrow-right" title="Activity continues..."></span>'.html_safe if record.over(@end_time) %>
+                  <%= (format_with_day(task.end_time_capped_by(@end_time), task.start_time_capped_by(@start_time), task.end_time_capped_by(@end_time))) unless task.end_time.nil? %>
+                  <%= '<span class="icon-arrow-right" title="Activity continues..."></span>'.html_safe if task.over(@end_time) %>
                 </h5>
               </blockquote>
             </div>
@@ -52,8 +52,8 @@
 
           <td class="row-fluid span3">
             <h5 class="time-spent" >
-              <%= record.human_total_time_capped_by(@start_time, @end_time)[:diff] unless record.end_time.nil? %>
-              <%= '<span title="Activity continues...">*</span>'.html_safe if record.over(@end_time) or record.over(@start_time) %>
+              <%= seconds_to_human_time(task.total_time_capped_by(@start_time, @end_time)) unless task.end_time.nil? %>
+              <%= '<span title="Activity continues...">*</span>'.html_safe if task.over(@end_time) or task.over(@start_time) %>
             </h5>
           </td>
 
@@ -65,10 +65,10 @@
               </a>
               <ul class="dropdown-menu">
                 <li>
-                  <%= link_to '<i class="icon-edit"></i> Details & Edit'.html_safe, edit_time_record_path(record.id) %>
+                  <%= link_to '<i class="icon-edit"></i> Details & Edit'.html_safe, edit_task_path(task.id) %>
                 </li>
                 <li>
-                  <%= link_to '<i class="icon-trash"></i> Destroy'.html_safe, record, method: :delete, data: { confirm: 'Are you sure?' } %>
+                  <%= link_to '<i class="icon-trash"></i> Destroy'.html_safe, task, method: :delete, data: { confirm: 'Are you sure?' } %>
                 </li>
               </ul>
             </div>
@@ -84,10 +84,10 @@
 <hr>
 <div class="container row">
   <div class="span3 pull-right">
-    <h4 id="total_time"><%= "%02d:%02d:%02d" % [(@total_seconds / 3600).to_i, ((@total_seconds % 3600) / 60).to_i, (@total_seconds % 60).to_i] %></h4>
+    <h4 id="total_time"><%= seconds_to_human_time(@total_seconds) %></h4>
   </div>
   <div class="span1 pull-right">
-    <h4>Total:</h4>
+    <h4>Total: </h4>
   </div>
 </div>
 <% end %>

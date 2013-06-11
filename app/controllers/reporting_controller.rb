@@ -63,9 +63,10 @@ class ReportingController < ApplicationController
 
   private
   def prepare
+    last_reporting_url(request.fullpath)
     @user = current_user
-    @records = @user.time_records.between(@start_time, @end_time).order("start_time")
-    @total_seconds = @records.sum do |t|
+    @tasks = @user.tasks.between(@start_time, @end_time).order("start_time")
+    @total_seconds = @tasks.sum do |t|
       t.total_time_capped_by(@start_time, @end_time) || 0
     end
   end

@@ -173,9 +173,6 @@ GEM
     thread_safe (0.1.0)
       atomic
     tilt (1.4.1)
-    time_diff (0.3.0)
-      activesupport
-      i18n
     treetop (1.4.14)
       polyglot
       polyglot (>= 0.3.1)
@@ -218,7 +215,6 @@ DEPENDENCIES
   simple_form (~> 3.0.0.rc)
   therubyracer
   thin
-  time_diff
   turbolinks
   uglifier (>= 1.0.3)
   wirble (~> 0.1.3)

@@ -1,7 +1,7 @@
-require 'trello'
+#require 'trello'
 
 class User < ActiveRecord::Base
-  has_many :time_records
+  has_many :tasks
 
   def self.from_api_key(apikey)
     where(:api_key => apikey).first
@@ -32,15 +32,15 @@ class User < ActiveRecord::Base
     @oauth_hash_yaml ||= YAML::load(oauth_hash)
   end
 
-  include Trello
+  #include Trello
   #usage: @user.trello_api.find(:cards, Time_record.first.trello_card_id).name
-  def trello_api
-    @trello ||= Trello::Client.new(
-              :consumer_key => ENV['TRELLO_KEY'],
-              :consumer_secret => ENV['TRELLO_SECRET'],
-              :oauth_token => oauth_hash_yaml['extra']['access_token'].token,
-              :oauth_token_secret => oauth_hash_yaml[:extra][:access_token].secret
-             )
-  end
+  #def trello_api
+  #  @trello ||= Trello::Client.new(
+  #            :consumer_key => ENV['TRELLO_KEY'],
+  #            :consumer_secret => ENV['TRELLO_SECRET'],
+  #            :oauth_token => oauth_hash_yaml['extra']['access_token'].token,
+  #            :oauth_token_secret => oauth_hash_yaml[:extra][:access_token].secret
+  #           )
+  #end
 
 end

@@ -11,33 +11,47 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130610174609) do
+ActiveRecord::Schema.define(version: 20130611174438) do
 
-  create_table "time_records", force: true do |t|
-    t.integer  "user_id",                         null: false
-    t.string   "trello_board_id",                 null: false
-    t.string   "trello_card_id",                  null: false
-    t.string   "name",                            null: false
-    t.datetime "start_time",                      null: false
-    t.datetime "end_time"
-    t.boolean  "paused",          default: false
-    t.integer  "paused_for",      default: 0
+  create_table "projects", force: true do |t|
+    t.string   "name"
+    t.string   "board_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "time_records", ["user_id"], name: "index_time_records_on_user_id", using: :btree
+  create_table "tasks", force: true do |t|
+    t.integer  "project_id", null: false
+    t.integer  "user_id",    null: false
+    t.string   "name"
+    t.string   "card_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tasks", ["project_id"], name: "index_tasks_on_project_id", using: :btree
+  add_index "tasks", ["user_id"], name: "index_tasks_on_user_id", using: :btree
+
+  create_table "time_records", force: true do |t|
+    t.integer  "task_id",    null: false
+    t.datetime "start_time", null: false
+    t.datetime "end_time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "time_records", ["task_id"], name: "index_time_records_on_task_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name"
     t.text     "email"
     t.string   "provider"
     t.string   "uid"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.text     "oauth_hash"
     t.string   "auth_token"
     t.string   "api_key"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

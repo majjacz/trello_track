@@ -1,5 +1,6 @@
 TrelloTrack::Application.routes.draw do
 
+  resources :projects
   resources :users, :only => [:index, :edit, :update]
 
   root 'reporting#daily'
@@ -16,11 +17,11 @@ TrelloTrack::Application.routes.draw do
 
   get 'settings' => 'settings#index', as: :settings
 
-  resources :time_records, :only => [:edit, :update, :destroy] do
+  resources :tasks, :except => [:index] do
     member do
       post 'stop'
       post 'pause'
-      post 'continue_from_pause'
+      post 'continue'
     end
   end
 

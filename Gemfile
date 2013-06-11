@@ -11,7 +11,6 @@ gem 'omniauth-trello'
 gem 'ruby-trello'
 gem 'gravatar_image_tag', '~> 1.1.3'
 gem 'simple_form', '~> 3.0.0.rc'
-gem 'time_diff'
 gem 'browser-timezone-rails'
 
 gem 'jquery-turbolinks'
