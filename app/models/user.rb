@@ -1,7 +1,9 @@
 #require 'trello'
 
 class User < ActiveRecord::Base
+
   has_many :tasks
+  has_one :unfinished_task, :class_name => 'Task', :conditions => 'time_records.end_time IS NULL'
 
   def self.from_api_key(apikey)
     where(:api_key => apikey).first

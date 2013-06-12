@@ -20,7 +20,6 @@ TrelloTrack::Application.routes.draw do
   resources :tasks, :except => [:index] do
     member do
       post 'stop'
-      post 'pause'
       post 'continue'
     end
   end
@@ -30,7 +29,7 @@ TrelloTrack::Application.routes.draw do
     post '/timer/create' => 'timer#create'
     post '/timer/stop' => 'timer#stop'
     post '/timer/pause' => 'timer#pause'
-    post '/timer/continue' => 'timer#continue_from_pause'
+    post '/timer/continue' => 'timer#continue'
   end
 
 

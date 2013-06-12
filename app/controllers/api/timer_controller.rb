@@ -6,11 +6,11 @@ module Api
     respond_to :json
 
     def in_progress
-      @record = @user.time_records.in_progress.first
+      @task = @user.unfinished_task
     end
 
     def create
-      if @record = TimeRecord.start(@user, params[:name], params[:board_id], params[:card_id])
+      if @task = Task.start(@user, params[:name], params[:board_id], params[:card_id])
         render json: {:status => true}
       else
         render json: {:status => false}
@@ -18,27 +18,22 @@ module Api
     end
 
     def stop
-      unless @user.time_records.in_progress.empty?
-        TimeRecord.find(@user.time_records.in_progress.first.id).stop
+      task = @user.unfinished_task
+      unless task.nil?
+        task.stop
         render json: {:status => true}
       else
         render json: {:status => false}
       end
     end
 
-    def pause
-      unless @user.time_records.in_progress.empty?
-        TimeRecord.find(@user.time_records.in_progress.first.id).pause
-        render json: {:status => true}
-      else
-        render json: {:status => false}
-      end
-    end
-
-    def continue_from_pause
-      unless @user.time_records.in_progress.empty?
-        TimeRecord.find(@user.time_records.in_progress.first.id).continue_from_pause
-        render json: {:status => true}
+    def continue
+      if @user.unfinished_task.nil?
+        task = @user.tasks.last
+        unless task.nil?
+          task.continue
+          render json: {:status => true}
+        end
       else
         render json: {:status => false}
       end

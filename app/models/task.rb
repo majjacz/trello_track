@@ -3,10 +3,12 @@ class Task < ActiveRecord::Base
   belongs_to :user
   belongs_to :project
   has_many :time_records
+  has_one :not_finished, :class_name => 'TimeRecord', :conditions => {:end_time => nil}
 
-  scope :between, lambda { |start_time, end_time| includes(:time_records).where("
-           (time_records.start_time >= :start_time AND time_records.start_time <= :end_time) OR
-           (time_records.end_time <= :end_time AND time_records.end_time >= :start_time)",
+  scope :between, lambda { |start_time, end_time| where("
+           time_records.start_time <= :end_time AND
+           (time_records.end_time >= :start_time OR
+           (time_records.end_time IS NULL AND time_records.start_time >= :start_time))",
            {:end_time => end_time, :start_time => start_time})
          }
 
@@ -15,7 +17,7 @@ class Task < ActiveRecord::Base
   end
 
   def self.start(user, name, board_id, card_id)
-    unless user.tasks.last.end_time.nil?
+    if user.unfinished_task.nil?
       t = Task.new
       t.user = user
       t.name = name
@@ -37,14 +39,14 @@ class Task < ActiveRecord::Base
     end
   end
 
-  def continue
-    if user.task.last == self
+  def continue(task=false)
+    task ||= user.tasks.last
+    if task == self
       r = TimeRecord.new
-      r.task = t
+      r.task = task
       r.start_time = Time.now
       return true if r.save
     else
-      last_task = user.task.last
       Task.start(user, last_task.name, last_task.board_id, last_task.card_id)
     end
   end

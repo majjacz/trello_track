@@ -3,7 +3,7 @@ class ReportingController < ApplicationController
   def daily
 
     if params[:year].present? and params[:month].present? and params[:day].present?
-      @date = Time.zone.parse("#{params[:year]}-#{params[:month]}-#{params[:day]}").to_datetime.in_time_zone
+      @date = Time.zone.parse("#{params[:year]}-#{params[:month]}-#{params[:day]}").to_datetime
       @start_time = @date.beginning_of_day
       @end_time = @start_time + 1.day
       @human_end_time = @date.end_of_day
@@ -35,7 +35,7 @@ class ReportingController < ApplicationController
   def monthly
 
     if params[:year].present? and params[:month].present?
-      @date = Time.zone.parse("#{params[:year]}-#{params[:month]}-1").to_datetime.in_time_zone
+      @date = Time.zone.parse("#{params[:year]}-#{params[:month]}-1").to_datetime
       @start_time = @date.to_time.in_time_zone
       @end_time = @start_time + 1.month
       @human_end_time = @date.end_of_month.end_of_day

@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
 
-  before_filter :require_user
+  before_filter :require_user, :set_time_zone
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -23,6 +23,11 @@ class ApplicationController < ActionController::Base
 
     def require_user
       redirect_to login_path if current_user.nil?
+    end
+
+    def set_time_zone
+      time_zone = cookies["browser.timezone"]
+      Time.zone =  time_zone if time_zone.present?
     end
 
 end
