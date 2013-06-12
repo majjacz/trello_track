@@ -13,10 +13,12 @@
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery.livequery
+//= require jquery.cookie
 //= require jquery_ujs
+//= require detect_timezone
+//= require partials/set_time_zone
 //= require moment
 //= require bootstrap
 //= require bootstrap-datepicker
-//= require browser_timezone_rails/application.js
 //= require_tree .
 //= require turbolinks
