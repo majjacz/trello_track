@@ -36,3 +36,8 @@ nav#timesheet-controls {
     margin-top: 2px;
   }
 }
+
+@media print {
+  .visible-print  { display: inherit !important; }
+  .hidden-print   { display: none !important; }
+}

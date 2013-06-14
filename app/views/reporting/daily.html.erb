@@ -2,6 +2,9 @@
   <div class="pagination span5">
     <h2 class="pull-left"><%= @date.strftime("%A, %d %b %Y") %></h2>
   </div>
+  <div class="pagination hidden visible-print pull-right">
+    <h2><%= @user.name %></h2>
+  </div>
   <nav class="span5 pull-right" id="timesheet-controls">
     <ul class="pager span2 pull-right">
       <li><a id="calendar_button_daily"

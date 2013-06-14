@@ -5,7 +5,9 @@
     <h2 class="pull-left"><%= @date.strftime("Week %V, %G") %></h2>
     <h4 class="pull-left" style="margin-top: -13px">(<%= @start_time.strftime("%d %b %Y") %> - <%= @human_end_time.strftime("%d %b %Y") %>)<h4>
   </div>
-
+  <div class="pagination hidden visible-print pull-right">
+    <h2><%= @user.name %></h2>
+  </div>
  <nav class="span5 pull-right" id="timesheet-controls">
 
     <ul class="pager span2 pull-right">

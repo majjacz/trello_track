@@ -10,9 +10,10 @@
     <thead>
       <tr>
         <th>Activity</th>
+        <%= '<th>Date</th>'.html_safe unless controller.action_name == 'daily' %>
         <th>Time</th>
         <th>Duration</th>
-        <th>Actions</th>
+        <th class="hidden-print">Actions</th>
       </tr>
     </thead>
 
@@ -21,33 +22,40 @@
       <% @tasks.each do |task| %>
         <tr>
 
-          <td class="row-fluid span6">
+          <td class="span6">
             <span class="activity">
               <%= task.name %>
             </span>
           </td>
-
-          <td class="row-fluid span2">
-            <div class="row-fluid span12">
-                <h5 class="started_at">
-                  <%= '<span class="icon-arrow-left" title="Activity start time is outside of this time frame."></span>'.html_safe if task.over(@start_time) %>
-                  <%= format_with_day(task.start_time_capped_by(@start_time), task.start_time_capped_by(@start_time), task.end_time_capped_by(@end_time)) %>
-                </h5>
-                <h5 class="ended_at">
-                  <%= (format_with_day(task.end_time_capped_by(@end_time), task.start_time_capped_by(@start_time), task.end_time_capped_by(@end_time))) unless task.end_time.nil? %>
-                  <%= '<span class="icon-arrow-right" title="Activity end time is outside of this time frame."></span>'.html_safe if task.over(@end_time) %>
-                </h5>
-            </div>
+          <% unless controller.action_name == 'daily' %>
+            <td class="span2">
+              <h5 class="started_at">
+                <%= task.start_time_capped_by(@start_time).strftime("%d.%m.%Y") %>
+              </h5>
+              <h5 class="ended_at">
+                <%= task.end_time_capped_by(@end_time).strftime("%d.%m.%Y") unless task.end_time.nil? %>
+              </h5>
+            </td>
+          <% end %>
+          <td class="span1">
+            <h5 class="started_at">
+              <%= '<span class="icon-arrow-left" title="Activity start time is outside of this time frame."></span>'.html_safe if task.over(@start_time) %>
+              <%= task.start_time_capped_by(@start_time).strftime("%H:%M") %>
+            </h5>
+            <h5 class="ended_at">
+              <%= task.end_time_capped_by(@end_time).strftime("%H:%M") unless task.end_time.nil? %>
+              <%= '<span class="icon-arrow-right" title="Activity end time is outside of this time frame."></span>'.html_safe if task.over(@end_time) %>
+            </h5>
           </td>
 
-          <td class="row-fluid span2">
+          <td class="span2">
             <h5 class="time-spent" >
               <%= seconds_to_human_time(task.total_time_capped_by(@start_time, @end_time)) unless task.end_time.nil? %>
               <%= '<span title="In this time frame.">*</span>'.html_safe if task.over(@end_time) or task.over(@start_time) %>
             </h5>
           </td>
 
-          <td class="row-fluid span1">
+          <td class="span1 hidden-print">
             <div class="btn-group">
               <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
                 <i class="icon-edit icon-white"></i>
@@ -81,8 +89,8 @@
 
   </table>
 <hr>
-<div class="container row">
-  <div class="span3 pull-right">
+<div class="row total">
+  <div class="span2 pull-right">
     <h4 id="total_time"><%= seconds_to_human_time(@total_seconds) %></h4>
   </div>
   <div class="span1 pull-right">

@@ -1,27 +1,57 @@
-.inline-date-label {
-  line-height: 15px;
-  float: left;
-  margin-right: 15px;
-}
+body#reporting {
 
-.table-report {
-
-  td {
-    padding-bottom: 0px;
-    padding-top: 0px;
+  .inline-date-label {
+    line-height: 15px;
+    float: left;
+    margin-right: 15px;
   }
 
-  .activity {
-    font-size: 18px;
-    text-shadow: #FFF 0px 1px 0px;
+  .table-report {
+
+    td {
+      padding-bottom: 0px;
+      padding-top: 0px;
+    }
+
+    .activity {
+      font-size: 18px;
+      text-shadow: #FFF 0px 1px 0px;
+    }
+
+    .started_at {
+      color: #033c73;
+    }
+
+    .ended_at {
+      color: #dd5600;
+    }
+
   }
 
-  .started_at {
-    color: #033c73;
+  .total {
+    margin-right: 50px;
   }
 
-  .ended_at {
-    color: #dd5600;
+  @media print {
+    .visible-print  { display: inherit !important; }
+    .hidden-print   { display: none !important; }
+
+    a[href]:after {
+      content: "";
+    }
+
+    abbr[title]:after {
+      content: "";
+    }
+
+    .total {
+      margin-right: -20px;
+    }
+
+    header, footer, #timesheet-controls, .pagination.week {
+      display: none;
+    }
+
   }
 
 }
