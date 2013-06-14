@@ -28,9 +28,9 @@ group :development, :test do
   gem 'debugger'
   gem 'thin'
   gem 'quiet_assets'
-  gem 'wirble', '~> 0.1.3' # improves rails console
-  gem 'hirb', '~> 0.7.1' # improves rails console
-  gem 'awesome_print', '~> 1.0.2' # improves rails console
+  gem 'wirble', '~> 0.1.3'
+  gem 'hirb', '~> 0.7.1'
+  gem 'awesome_print', '~> 1.0.2'
 end
 
 group :doc do

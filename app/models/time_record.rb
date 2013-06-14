@@ -10,6 +10,12 @@ class TimeRecord < ActiveRecord::Base
     end
   end
 
+  def total_time
+    unless self.end_time.nil?
+      end_time - start_time
+    end
+  end
+
   def end_time_capped_by(time)
     unless self.end_time.nil?
       if end_time >= time

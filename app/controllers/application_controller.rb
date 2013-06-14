@@ -14,6 +14,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def seconds_from_human(human)
+    ar = human.split(':')
+    if ar.length >= 2
+      seconds = ar[0].to_i * 3600 + ar[1].to_i * 60
+      seconds += ar[2].to_i if ar.length == 3
+      return seconds
+    end
+  end
+
   private
 
     def current_user
@@ -28,6 +37,7 @@ class ApplicationController < ActionController::Base
     def set_time_zone
       time_zone = cookies["browser.timezone"]
       Time.zone =  time_zone if time_zone.present?
+      Chronic.time_class = Time.zone
     end
 
 end

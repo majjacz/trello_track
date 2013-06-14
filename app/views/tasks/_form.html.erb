@@ -1,10 +1,19 @@
-<%= simple_form_for(@task) do |f| %>
+<%= simple_form_for(@task, html: {class: 'form-horizontal' }) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.association :project %>
-    <%= f.input :name %>
-    <%= f.input :card_id %>
+
+    <%= f.input :name, label: 'Activity', input_html: { style: 'width: 350px;' }  %>
+    <%= simple_fields_for @task.time_records.first do |r| %>
+      <%= r.input :start_time, as: :date_picker_with_time %>
+    <% end %>
+      <div class="control-group string duration">
+        <label class="string control-label" for="duration">Duration</label>
+        <div class="controls">
+          <input data-inputmask="'mask': 'h[:s:s]'" class="time" id="duration" name="task[duration]" type="text" value="<%= seconds_to_human_time(@task.total_time) %>">
+        </div>
+      </div>
+
   </div>
 
   <div class="form-actions">

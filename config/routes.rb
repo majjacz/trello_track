@@ -28,7 +28,6 @@ TrelloTrack::Application.routes.draw do
     get '/timer' => 'timer#in_progress'
     post '/timer/create' => 'timer#create'
     post '/timer/stop' => 'timer#stop'
-    post '/timer/pause' => 'timer#pause'
     post '/timer/continue' => 'timer#continue'
   end
 

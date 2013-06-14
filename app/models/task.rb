@@ -4,6 +4,7 @@ class Task < ActiveRecord::Base
   belongs_to :project
   has_many :time_records
   has_one :not_finished, :class_name => 'TimeRecord', :conditions => {:end_time => nil}
+  accepts_nested_attributes_for :time_records
 
   scope :between, lambda { |start_time, end_time| where("
            time_records.start_time <= :end_time AND
@@ -60,9 +61,18 @@ class Task < ActiveRecord::Base
   end
 
   def total_time_capped_by(start_time, end_time)
-    if end_time
+    if self.end_time
       total_seconds = time_records.sum do |t|
         t.total_time_capped_by(start_time, end_time) || 0
+      end
+      return total_seconds
+    end
+  end
+
+  def total_time
+    if self.end_time
+      total_seconds = time_records.sum do |t|
+        t.total_time || 0
       end
       return total_seconds
     end
@@ -89,6 +99,18 @@ class Task < ActiveRecord::Base
   def over(time)
     if end_time
       start_time <= time and end_time >= time
+    end
+  end
+
+  def update_time_records(name, start_time, seconds)
+    transaction do
+      self.name = name
+      time_records.destroy_all
+      r = TimeRecord.new()
+      r.task = self
+      r.start_time = start_time.in_time_zone('UTC')
+      r.end_time = r.start_time + seconds
+      return true if self.save and r.save
     end
   end
 

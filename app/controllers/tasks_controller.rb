@@ -1,11 +1,9 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
-
-  def show
-  end
+  before_action :set_task, only: [:edit, :update, :destroy]
 
   def new
     @task = Task.new
+    @time_record = TimeRecord.new
   end
 
   def edit
@@ -13,36 +11,34 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-
-    respond_to do |format|
-      if @task.save
-        format.html { redirect_to @task, notice: 'Task was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @task }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
+    if @task.save
+      redirect_to last_reporting_url, notice: 'Task was successfully created.'
+    else
+      render action: 'new'
     end
   end
 
   def update
-    respond_to do |format|
-      if @task.update(task_params)
-        format.html { redirect_to @task, notice: 'Task was successfully updated.' }
-        format.json { head :no_content }
+    start_time = Time.zone.parse("#{params[:time_record][:start_date]} #{params[:time_record][:start_time]}")
+    seconds = seconds_from_human(params[:task][:duration])
+    if seconds != @task.total_time or start_time != @task.start_time
+      if @task.update_time_records(task_params[:name], start_time, seconds)
+        redirect_to last_reporting_url, notice: 'Task was successfully updated.'
       else
-        format.html { render action: 'edit' }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
+        render action: 'edit'
+      end
+    else
+      if @task.update(params.require(:task).permit(:name))
+        redirect_to last_reporting_url, notice: 'Task was successfully updated.'
+      else
+        render action: 'edit'
       end
     end
   end
 
   def destroy
     @task.destroy
-    respond_to do |format|
-      format.html { redirect_to last_reporting_url }
-      format.json { head :no_content }
-    end
+    redirect_to last_reporting_url, notice: 'Task was destroyed.'
   end
 
   private
@@ -53,6 +49,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:project_id, :name, :card_id)
+      params.require(:task).permit(:name, :project)
     end
 end
