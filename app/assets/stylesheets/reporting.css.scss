@@ -3,3 +3,25 @@
   float: left;
   margin-right: 15px;
 }
+
+.table-report {
+
+  td {
+    padding-bottom: 0px;
+    padding-top: 0px;
+  }
+
+  .activity {
+    font-size: 18px;
+    text-shadow: #FFF 0px 1px 0px;
+  }
+
+  .started_at {
+    color: #033c73;
+  }
+
+  .ended_at {
+    color: #dd5600;
+  }
+
+}
