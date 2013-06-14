@@ -39,7 +39,7 @@ class TimeRecord < ActiveRecord::Base
   end
 
   def end_time
-    read_attribute(:end_time).in_time_zone if read_attribute(:end_time)
+    return read_attribute(:end_time).in_time_zone if read_attribute(:end_time)
   end
 
 end

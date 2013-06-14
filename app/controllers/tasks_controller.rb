@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:edit, :update, :destroy]
+  before_action :set_task, only: [:stop, :continue, :edit, :update, :destroy]
 
   def new
     @task = Task.new
@@ -7,6 +7,16 @@ class TasksController < ApplicationController
   end
 
   def edit
+  end
+
+  def stop
+    @task.stop
+    redirect_to last_reporting_url, notice: 'Timer was stopped.'
+  end
+
+  def continue
+    @task.continue
+    redirect_to last_reporting_url, notice: 'Timer started.'
   end
 
   def create

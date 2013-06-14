@@ -2,7 +2,7 @@
 <div class="container row">
 
   <div class="pagination span5">
-    <h2 class="pull-left"><%= @date.advance({:days => +4}).strftime("Week %V, %Y") %></h2>
+    <h2 class="pull-left"><%= @date.strftime("Week %V, %G") %></h2>
     <h4 class="pull-left" style="margin-top: -13px">(<%= @start_time.strftime("%d %b %Y") %> - <%= @human_end_time.strftime("%d %b %Y") %>)<h4>
   </div>
 
@@ -19,7 +19,7 @@
             <% last_week = @date.advance({:weeks => -1, :days => +4})%>
             <%= link_to '', weekly_url({year: last_week.year, week: last_week.cweek}), class: 'icon-arrow-left' %>
           </li>
-          <li<%= ' class="active"'.html_safe if @date.to_date.cweek == Time.zone.now.to_date.cweek %>>
+          <li<%= ' class="active"'.html_safe if @date.strftime("%V %G") == Time.zone.now.strftime("%V %G") %>>
             <%= link_to 'This week', weekly_url %>
           </li>
           <li class="next">

@@ -3,7 +3,7 @@ class ReportingController < ApplicationController
   def daily
 
     if params[:year].present? and params[:month].present? and params[:day].present?
-      @date = Time.zone.parse("#{params[:year]}-#{params[:month]}-#{params[:day]}").to_datetime
+      @date = Time.zone.parse("#{params[:year]}-#{params[:month]}-#{params[:day]}")
       @start_time = @date.beginning_of_day
       @end_time = @start_time + 1.day
       @human_end_time = @date.end_of_day
@@ -35,7 +35,7 @@ class ReportingController < ApplicationController
   def monthly
 
     if params[:year].present? and params[:month].present?
-      @date = Time.zone.parse("#{params[:year]}-#{params[:month]}-1").to_datetime
+      @date = Time.zone.parse("#{params[:year]}-#{params[:month]}-1")
       @start_time = @date.to_time.in_time_zone
       @end_time = @start_time + 1.month
       @human_end_time = @date.end_of_month.end_of_day
@@ -50,8 +50,8 @@ class ReportingController < ApplicationController
   def custom
 
     if params[:year_from].present? and params[:month_from].present? and params[:day_from].present? and params[:year_to].present? and params[:month_to].present? and params[:day_to].present?
-      @start_time = Time.zone.parse("#{params[:year_from]}-#{params[:month_from]}-#{params[:day_from]}").to_datetime.in_time_zone
-      @end_time = Time.zone.parse("#{params[:year_to]}-#{params[:month_to]}-#{params[:day_to]}").to_datetime.in_time_zone.beginning_of_day + 1.day
+      @start_time = Time.zone.parse("#{params[:year_from]}-#{params[:month_from]}-#{params[:day_from]}")
+      @end_time = Time.zone.parse("#{params[:year_to]}-#{params[:month_to]}-#{params[:day_to]}").beginning_of_day + 1.day
       @human_end_time = @end_time - 1.seconds
       prepare
     else
@@ -66,7 +66,7 @@ class ReportingController < ApplicationController
     last_reporting_url(request.fullpath)
     @user = current_user
     @tasks = @user.tasks.between(@start_time, @end_time).order("start_time")
-    @total_seconds = @tasks.sum do |t|
+    @total_seconds = @tasks.to_a.sum do |t|
       t.total_time_capped_by(@start_time, @end_time) || 0
     end
   end

@@ -1,7 +1,7 @@
 TrelloTrack::Application.routes.draw do
 
-  resources :projects
-  resources :users, :only => [:index, :edit, :update]
+  resources :projects, :only => [:index, :edit, :update, :destroy]
+  resources :users, :only => [:index, :edit, :update, :destroy]
 
   root 'reporting#daily'
 
@@ -17,7 +17,7 @@ TrelloTrack::Application.routes.draw do
 
   get 'settings' => 'settings#index', as: :settings
 
-  resources :tasks, :except => [:index] do
+  resources :tasks, :except => [:index, :show] do
     member do
       post 'stop'
       post 'continue'

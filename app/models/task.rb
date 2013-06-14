@@ -7,9 +7,9 @@ class Task < ActiveRecord::Base
   accepts_nested_attributes_for :time_records
 
   scope :between, lambda { |start_time, end_time| where("
-           time_records.start_time <= :end_time AND
-           (time_records.end_time >= :start_time OR
-           (time_records.end_time IS NULL AND time_records.start_time >= :start_time))",
+           time_records.start_time < :end_time AND
+           (time_records.end_time > :start_time OR
+           (time_records.end_time IS NULL AND time_records.start_time > :start_time))",
            {:end_time => end_time, :start_time => start_time})
          }
 
@@ -33,6 +33,18 @@ class Task < ActiveRecord::Base
     end
   end
 
+  def update_time_records(name, start_time, seconds)
+    transaction do
+      self.name = name
+      time_records.destroy_all
+      r = TimeRecord.new()
+      r.task = self
+      r.start_time = start_time.in_time_zone('UTC')
+      r.end_time = r.start_time + seconds
+      return true if self.save and r.save
+    end
+  end
+
   def stop
     if r = time_records.last
       r.end_time = Time.now
@@ -40,11 +52,11 @@ class Task < ActiveRecord::Base
     end
   end
 
-  def continue(task=false)
-    task ||= user.tasks.last
-    if task == self
+  def continue
+    last_task = user.tasks.last
+    if last_task == self
       r = TimeRecord.new
-      r.task = task
+      r.task = self
       r.start_time = Time.now
       return true if r.save
     else
@@ -62,7 +74,7 @@ class Task < ActiveRecord::Base
 
   def total_time_capped_by(start_time, end_time)
     if self.end_time
-      total_seconds = time_records.sum do |t|
+      total_seconds = time_records.to_a.sum do |t|
         t.total_time_capped_by(start_time, end_time) || 0
       end
       return total_seconds
@@ -98,19 +110,7 @@ class Task < ActiveRecord::Base
 
   def over(time)
     if end_time
-      start_time <= time and end_time >= time
-    end
-  end
-
-  def update_time_records(name, start_time, seconds)
-    transaction do
-      self.name = name
-      time_records.destroy_all
-      r = TimeRecord.new()
-      r.task = self
-      r.start_time = start_time.in_time_zone('UTC')
-      r.end_time = r.start_time + seconds
-      return true if self.save and r.save
+      start_time < time and end_time > time
     end
   end
 
