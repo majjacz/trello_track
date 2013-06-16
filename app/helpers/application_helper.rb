@@ -13,4 +13,12 @@ module ApplicationHelper
     "%02d:%02d:%02d" % [(seconds / 3600).to_i, ((seconds % 3600) / 60).to_i, (seconds % 60).to_i]
   end
 
+  def smart_date(time, start_time, end_time)
+    if start_time.year == end_time.year
+      time.strftime("%a, %d.%m")
+    else
+      time.strftime("%d.%m.%Y")
+    end
+  end
+
 end

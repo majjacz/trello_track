@@ -52,6 +52,9 @@ class ReportingController < ApplicationController
     if params[:year_from].present? and params[:month_from].present? and params[:day_from].present? and params[:year_to].present? and params[:month_to].present? and params[:day_to].present?
       @start_time = Time.zone.parse("#{params[:year_from]}-#{params[:month_from]}-#{params[:day_from]}")
       @end_time = Time.zone.parse("#{params[:year_to]}-#{params[:month_to]}-#{params[:day_to]}").beginning_of_day + 1.day
+      if @end_time <= @start_time
+        @end_time = @start_time.beginning_of_day + 1.day
+      end
       @human_end_time = @end_time - 1.seconds
       prepare
     else

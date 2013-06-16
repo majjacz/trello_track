@@ -4,11 +4,13 @@
   <div class="span8">
     <h4 class="inline-date-label">From:</h4>
     <div id="calendar_input_from" class="input-append date pull-left">
-      <input type="text" value="<%= @start_time.strftime('%d.%m.%Y') %>" class="span2"><span class="add-on"><i class="icon-th"></i></span>
+      <input type="text" value="<%= @start_time.strftime('%d.%m.%Y') %>" class="span2">
+      <span class="add-on"><i class="icon-th"></i></span>
     </div>
     <h4 class="inline-date-label" style="margin-left: 25px;">To:</h4>
-    <div id="calendar_input_to" class="input-append date pull-left">
-      <input type="text" value="<%= @human_end_time.strftime('%d.%m.%Y') %>" class="span2"><span class="add-on"><i class="icon-th"></i></span>
+    <div id="calendar_input_to" class="input-append date pull-left" data-date-start-date="<%= @start_time.strftime('%d.%m.%Y') %>">
+      <input type="text" value="<%= @human_end_time.strftime('%d.%m.%Y') %>" class="span2">
+      <span class="add-on"><i class="icon-th"></i></span>
     </div>
   </div>
   <div class="pagination hidden visible-print pull-right">
