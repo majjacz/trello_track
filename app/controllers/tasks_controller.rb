@@ -20,9 +20,21 @@ class TasksController < ApplicationController
   end
 
   def create
+    start_time = Time.zone.parse("#{params[:time_record][:start_date]} #{params[:time_record][:start_time]}")
+    seconds = seconds_from_human(params[:task][:duration])
     @task = Task.new(task_params)
-    if @task.save
-      redirect_to last_reporting_url, notice: 'Task was successfully created.'
+    @task.project = Project.find_or_create_by_name("No project")
+    @task.user = current_user
+    if @task.save and @task.update_time_records(task_params[:name], start_time, seconds)
+      @task.reload
+      end_time = @task.end_time
+      redirect_to custom_url(year_from: start_time.year,
+                             month_from: start_time.month,
+                             day_from: start_time.day,
+                             year_to: end_time.year,
+                             month_to: end_time.month,
+                             day_to: end_time.day
+                             ), notice: 'Task created.'
     else
       render action: 'new'
     end

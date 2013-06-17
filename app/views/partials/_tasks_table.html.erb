@@ -36,10 +36,12 @@
               <h5 class="started_at">
                 <%= smart_date(start_time, @start_time, @end_time) %>
               </h5>
-              <% if start_time.day != (end_time -1.seconds).day %>
-                <h5 class="ended_at">
-                  <%= smart_date(end_time, @start_time, @end_time) %>
-                </h5>
+              <% unless end_time.nil? %>
+                <% if start_time.day != (end_time -1.seconds).day %>
+                  <h5 class="ended_at">
+                    <%= smart_date(end_time, @start_time, @end_time) %>
+                  </h5>
+                <% end %>
               <% end %>
             </td>
           <% end %>

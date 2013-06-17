@@ -7,8 +7,11 @@
       <div class="container">
         <%= link_to 'Trello Track'.html_safe, '/', class: 'brand' %>
         <ul class="nav">
+          <li <%='class="active"'.html_safe if controller_name == 'tasks' and (controller.action_name == 'new' or controller.action_name == 'extensions') %>><%= link_to 'Tracking', new_task_path %></li>
           <li <%='class="active"'.html_safe if controller_name == 'reporting' %>><%= link_to 'Reporting', daily_path %></li>
-          <li <%='class="active"'.html_safe if controller_name == 'settings' or controller_name == 'users' %>><%= link_to 'Settings', settings_path %></li>
+          <% if current_user.admin? %>
+            <li <%='class="active"'.html_safe if controller_name == 'settings' or controller_name == 'users' %>><%= link_to 'Settings', settings_path %></li>
+          <% end %>
         </ul>
         <ul class="nav pull-right">
           <li class="dropdown">
@@ -16,6 +19,7 @@
             <ul class="dropdown-menu">
               <li class="nav-header"><%= current_user.name %></li>
               <li class="divider"></li>
+              <li><%= link_to 'My Account', account_path %></li>
               <li><%= link_to 'Sign Out', logout_path %></li>
             </ul>
           </li>
@@ -28,6 +32,10 @@
   <!-- Subnav -->
   <div class="subnav subnav-fixed">
     <ul class="nav nav-pills">
+        <% if controller_name == 'tasks' %>
+          <li <%='class="active"'.html_safe if controller.action_name == 'new' %>><%= link_to 'Add Manually', new_task_path %></li>
+          <li <%='class="active"'.html_safe if controller.action_name == 'extensions' %>><%= link_to 'Chrome extension', extensions_path %></li>
+        <% end %>
         <% if controller_name == 'reporting' %>
           <li <%='class="active"'.html_safe if controller.action_name == 'daily' %>><%= link_to 'Daily', daily_path %></li>
           <li <%='class="active"'.html_safe if controller.action_name == 'weekly' %>><%= link_to 'Weekly', weekly_path %></li>

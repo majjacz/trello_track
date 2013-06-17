@@ -72,7 +72,7 @@ class Task < ActiveRecord::Base
   end
 
   def end_time
-    time_records.last.end_time
+    time_records.last.end_time unless time_records.last.nil?
   end
 
   def total_time_capped_by(start_time, end_time)

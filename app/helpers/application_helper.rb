@@ -10,6 +10,7 @@ module ApplicationHelper
   end
 
   def seconds_to_human_time(seconds)
+    seconds ||= 0
     "%02d:%02d:%02d" % [(seconds / 3600).to_i, ((seconds % 3600) / 60).to_i, (seconds % 60).to_i]
   end
 

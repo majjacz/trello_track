@@ -4,13 +4,13 @@
   <div class="form-inputs">
 
     <%= f.input :name, label: 'Activity', input_html: { style: 'width: 350px;' }  %>
-    <%= simple_fields_for @task.time_records.first do |r| %>
+    <%= simple_fields_for (@task.time_records.first || @time_record)  do |r| %>
       <%= r.input :start_time, as: :date_picker_with_time %>
     <% end %>
       <div class="control-group string duration">
         <label class="string control-label" for="duration">Duration</label>
         <div class="controls">
-          <input data-inputmask="'mask': 'h[:s:s]'" class="time" id="duration" name="task[duration]" type="text" value="<%= seconds_to_human_time(@task.total_time) %>">
+          <input data-inputmask="'mask': '9[9:s:s]'" class="time" id="duration" name="task[duration]" type="text" value="<%= seconds_to_human_time(@task.total_time) %>">
         </div>
       </div>
 

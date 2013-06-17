@@ -15,7 +15,10 @@ TrelloTrack::Application.routes.draw do
   get '/reporting/monthly(/:year/:month)' => 'reporting#monthly', as: :monthly
   get '/reporting/custom/from(/:year_from/:month_from/:day_from)/to(/:year_to/:month_to/:day_to)' => 'reporting#custom', as: :custom
 
-  get 'settings' => 'settings#index', as: :settings
+  get '/settings' => 'settings#index', as: :settings
+
+  get '/extensions' => 'tasks#extensions', as: :extensions
+  get '/account' => 'users#account', as: :account
 
   resources :tasks, :except => [:index, :show] do
     member do

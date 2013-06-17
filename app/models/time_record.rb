@@ -35,7 +35,7 @@ class TimeRecord < ActiveRecord::Base
   end
 
   def start_time
-    read_attribute(:start_time).in_time_zone
+    read_attribute(:start_time).in_time_zone if read_attribute(:start_time)
   end
 
   def end_time
