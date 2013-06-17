@@ -16,6 +16,7 @@
 //= require jquery.cookie
 //= require jquery.inputmask
 //= require jquery.inputmask.date.extensions
+//= require chosen-jquery
 //= require jquery_ujs
 //= require detect_timezone
 //= require partials/set_time_zone

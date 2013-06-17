@@ -7,6 +7,7 @@ $(function() {
     weekStart: 1
   }).on('changeDate', function(e){
         var path = "/reporting/daily/" + String(e.date.getFullYear()) + "/" + String(e.date.getMonth()+1) + "/" + String(e.date.getDate());
+        path += window.location.search;
         Turbolinks.visit(path);
     });
 
@@ -19,6 +20,7 @@ $(function() {
   }).on('changeDate', function(e){
         var date = moment(e.date)
         var path = "/reporting/weekly/" +  String(date.day(4).year()) + "/" + String(date.isoWeek());
+        path += window.location.search;
         Turbolinks.visit(path);
     });
 
@@ -30,6 +32,7 @@ $(function() {
     weekStart: 1
   }).on('changeDate', function(e){
         var path = "/reporting/monthly/" + String(e.date.getFullYear()) + "/" + String(e.date.getMonth()+1);
+        path += window.location.search;
         Turbolinks.visit(path);
     });
 
@@ -44,6 +47,7 @@ $(function() {
         var date_to = moment($('#calendar_input_to > input').val(), 'DD.MM.YYYY');
         var path = "/reporting/custom/from/" + String(e.date.getFullYear()) + "/" + String(e.date.getMonth()+1) + "/" + String(e.date.getDate());
         path += "/to/" + String(date_to._a[0]) + "/" + String(date_to._a[1]+1) + "/" + String(date_to._a[2]);
+        path += window.location.search;
         Turbolinks.visit(path);
     });
 
@@ -58,7 +62,19 @@ $(function() {
         var date_from = moment($('#calendar_input_from > input').val(), 'DD.MM.YYYY');
         var path = "/reporting/custom/from/" + String(date_from._a[0]) + "/" + String(date_from._a[1]+1) + "/" + String(date_from._a[2]);
         path += "/to/" + String(e.date.getFullYear()) + "/" + String(e.date.getMonth()+1) + "/" + String(e.date.getDate());
+        path += window.location.search;
         Turbolinks.visit(path);
     });
+
+
+  $("#users_select").chosen().change(function(e){
+    path = window.location.pathname + "?" + $('form#filter').serialize();
+    Turbolinks.visit(path);
+  });
+
+  $("#projects_select").chosen().change(function(e){
+    path = window.location.pathname + "?" + $('form#filter').serialize();
+    Turbolinks.visit(path);
+  });
 
 });

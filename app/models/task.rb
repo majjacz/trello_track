@@ -3,7 +3,7 @@ class Task < ActiveRecord::Base
   belongs_to :user
   belongs_to :project
   has_many :time_records
-  has_one :not_finished, :class_name => 'TimeRecord', :conditions => {:end_time => nil}
+  has_one :not_finished, :class_name => 'TimeRecord', conditions: {:end_time => nil}
   accepts_nested_attributes_for :time_records
 
   scope :between, lambda { |start_time, end_time| where("
@@ -12,6 +12,9 @@ class Task < ActiveRecord::Base
            (time_records.end_time IS NULL AND time_records.start_time > :start_time))",
            {:end_time => end_time, :start_time => start_time})
          }
+
+  scope :users, lambda { |users| where(:user_id => users)}
+  scope :projects, lambda { |projects| where(:project_id => projects) }
 
   def self.default_scope
     includes(:time_records).order('time_records.start_time ASC')

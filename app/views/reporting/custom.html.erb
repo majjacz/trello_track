@@ -1,7 +1,8 @@
-<!-- Primary menu with the datetime, days control, calendar and user -->
-<div class="container row">
+<%= render "partials/filters" %>
 
-  <div class="span8">
+<div class="row">
+
+  <div class="span7">
     <h4 class="inline-date-label">From:</h4>
     <div id="calendar_input_from" class="input-append date pull-left">
       <input type="text" value="<%= @start_time.strftime('%d.%m.%Y') %>" class="span2">
@@ -16,21 +17,6 @@
   <div class="pagination hidden visible-print pull-right">
     <h2><%= @user.name %></h2>
   </div>
-
- <nav class="span5 pull-right" id="timesheet-controls">
-
-    <ul class="pager span2 pull-right">
-      <li></li>
-    </ul>
-
-    <div class="pull-right">
-
-
-
-    </div>
-
-  </nav>
-
 </div>
 
 <%= render "partials/tasks_table" %>

@@ -34,6 +34,10 @@ class User < ActiveRecord::Base
     @oauth_hash_yaml ||= YAML::load(oauth_hash)
   end
 
+  def admin?
+    true
+  end
+
   #include Trello
   #usage: @user.trello_api.find(:cards, Time_record.first.trello_card_id).name
   #def trello_api

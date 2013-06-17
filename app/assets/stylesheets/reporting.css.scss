@@ -32,6 +32,14 @@ body#reporting {
     margin-right: 50px;
   }
 
+  .filters {
+    .chzn-container {
+      float: right;
+      margin-left: 5px;
+      margin-bottom: 10px;
+    }
+  }
+
   @media print {
     .visible-print  { display: inherit !important; }
     .hidden-print   { display: none !important; }

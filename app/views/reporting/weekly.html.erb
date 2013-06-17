@@ -1,4 +1,5 @@
-<!-- Primary menu with the datetime, days control, calendar and user -->
+<%= render "partials/filters" %>
+
 <div class="container row">
 
   <div class="pagination span5">
@@ -19,14 +20,14 @@
       <ul>
           <li class="previous">
             <% last_week = @date.advance({:weeks => -1, :days => +4})%>
-            <%= link_to '', weekly_url({year: last_week.year, week: last_week.cweek}), class: 'icon-arrow-left' %>
+            <%= link_to '', weekly_path(params.merge({year: last_week.year, week: last_week.cweek})), class: 'icon-arrow-left' %>
           </li>
           <li<%= ' class="active"'.html_safe if @date.strftime("%V %G") == Time.zone.now.strftime("%V %G") %>>
-            <%= link_to 'This week', weekly_url %>
+            <%= link_to 'This week', weekly_path(params.merge({year: @date.strftime("%G"), week: Time.zone.now.strftime("%V") })) %>
           </li>
           <li class="next">
             <% next_week = @date.advance({:weeks => +1, :days => +4}) %>
-            <%= link_to '', weekly_url({year: next_week.year, week: next_week.cweek}), class: 'icon-arrow-right' %>
+            <%= link_to '', weekly_path(params.merge({year: next_week.year, week: next_week.cweek})), class: 'icon-arrow-right' %>
           </li>
       </ul>
 

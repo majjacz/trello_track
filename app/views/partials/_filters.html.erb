@@ -1,0 +1,17 @@
+<% if @user.admin? %>
+  <div class="row filters hidden-print">
+    <form id="filter">
+        <%= select_tag "users", options_from_collection_for_select(@users, "id", "name", params[:users]),
+                                :multiple => true, :id => "users_select",
+                                :data => {:placeholder => "Filter by users"},
+                                :class => "span5 pull-right"
+                                %>
+
+        <%= select_tag "projects", options_from_collection_for_select(@projects, "id", "name", params[:projects]),
+                                :multiple => true, :id => "projects_select",
+                                :data => {:placeholder => "Filter by projects"},
+                                :class => "span5 pull-right"
+                                %>
+    </form>
+  </div>
+<% end %>

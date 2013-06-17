@@ -1,4 +1,6 @@
 class ReportingController < ApplicationController
+  has_scope :users, :type => :array
+  has_scope :projects, :type => :array
 
   def daily
 
@@ -68,7 +70,17 @@ class ReportingController < ApplicationController
   def prepare
     last_reporting_url(request.fullpath)
     @user = current_user
-    @tasks = @user.tasks.between(@start_time, @end_time).order("start_time")
+    if @user.admin?
+      @users = User.all
+      @projects = Project.all
+      if (params[:users] or params[:projects])
+        @tasks = apply_scopes(Task).between(@start_time, @end_time)
+      else
+        @tasks = Task.between(@start_time, @end_time)
+      end
+    else
+      @tasks = @user.tasks.between(@start_time, @end_time)
+    end
     @total_seconds = @tasks.to_a.sum do |t|
       t.total_time_capped_by(@start_time, @end_time) || 0
     end
