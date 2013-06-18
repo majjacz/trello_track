@@ -9,9 +9,10 @@
 
     <thead>
       <tr>
+        <%= '<th>User</th>'.html_safe if @filtering_users_len %>
+        <%= '<th>Project</th>'.html_safe if @filtering_projects_len %>
         <th>Activity</th>
         <%= '<th>Date</th>'.html_safe unless controller.action_name == 'daily' %>
-        <% '<th>Time</th>' %>
         <th>Duration</th>
         <th class="hidden-print">Actions</th>
       </tr>
@@ -23,10 +24,26 @@
         <%
           start_time = task.start_time_capped_by(@start_time)
           end_time = task.end_time_capped_by(@end_time)
+          space_for_activity = 7
         -%>
         <tr>
-
-          <td class="span7">
+          <% if @filtering_users_len %>
+            <% space_for_activity -= 2 %>
+            <td class="span2">
+              <span class="user">
+                <%= task.user.name %>
+              </span>
+            </td>
+          <% end %>
+          <% if @filtering_projects_len %>
+            <% space_for_activity -= 2 %>
+            <td class="span2">
+              <span class="project">
+                <%= task.project.name %>
+              </span>
+            </td>
+          <% end %>
+          <td class="span<%= space_for_activity %>">
             <span class="activity">
               <%= task.name %>
             </span>

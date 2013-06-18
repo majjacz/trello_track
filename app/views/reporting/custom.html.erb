@@ -14,8 +14,12 @@
       <span class="add-on"><i class="icon-th"></i></span>
     </div>
   </div>
-  <div class="pagination hidden visible-print pull-right">
-    <h2><%= @user.name %></h2>
+  <div class="user-info hidden visible-print pull-right">
+    <%if @filtering_users == 1 %>
+      <h2><%= params[:users].first %></h2>
+    <% else %>
+      <h2><%= @user.name %></h2>
+    <% end %>
   </div>
 </div>
 

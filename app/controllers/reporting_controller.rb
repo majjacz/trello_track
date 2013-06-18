@@ -74,6 +74,14 @@ class ReportingController < ApplicationController
       @users = User.all
       @projects = Project.all
       if (params[:users] or params[:projects])
+        if params[:users] and params[:users].length >= 2
+          @filtering_user = User.find(params[:users].first)
+          @filtering_users_len = params[:users].length
+        end
+        if params[:projects] and params[:projects].length >= 2
+          @filtering_projects = Project.find(params[:projects].first)
+          @filtering_projects_len = params[:projects].length
+        end
         @tasks = apply_scopes(Task).between(@start_time, @end_time)
       else
         @tasks = Task.between(@start_time, @end_time)

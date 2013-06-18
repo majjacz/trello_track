@@ -42,9 +42,10 @@
           <li <%='class="active"'.html_safe if controller.action_name == 'monthly' %>><%= link_to 'Monthly', monthly_path %></li>
           <li <%='class="active"'.html_safe if controller.action_name == 'custom' %>><%= link_to 'Custom', custom_path %></li>
         <% end %>
-        <% if controller_name == 'settings' or controller_name == 'users' %>
+        <% if controller_name == 'settings' or controller_name == 'users' or controller_name == 'projects'%>
           <li <%='class="active"'.html_safe if controller.action_name == 'index' and controller_name == 'settings' %>><%= link_to 'Application', settings_path %></li>
-          <li <%='class="active"'.html_safe if controller.action_name == 'index' and controller_name == 'users' %>><%= link_to 'Users', users_path %></li>
+          <li <%='class="active"'.html_safe if controller_name == 'users' %>><%= link_to 'Users', users_path %></li>
+          <li <%='class="active"'.html_safe if controller_name == 'projects' %>><%= link_to 'Projects', projects_path %></li>
         <% end %>
     </ul>
   </div>

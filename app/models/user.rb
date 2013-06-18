@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    true
+    permissions == 1
   end
 
   #include Trello
