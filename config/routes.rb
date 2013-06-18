@@ -29,6 +29,7 @@ TrelloTrack::Application.routes.draw do
 
   namespace :api, defaults: {format: 'json'} do
     get '/timer' => 'timer#in_progress'
+    get '/timer/last' => 'timer#last_task'
     post '/timer/create' => 'timer#create'
     post '/timer/stop' => 'timer#stop'
     post '/timer/continue' => 'timer#continue'

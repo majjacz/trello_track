@@ -7,6 +7,12 @@ module Api
 
     def in_progress
       @task = @user.unfinished_task
+      render :template => 'api/timer/task'
+    end
+
+    def last_task
+      @task = @user.tasks.last
+      render :template => 'api/timer/task'
     end
 
     def create
