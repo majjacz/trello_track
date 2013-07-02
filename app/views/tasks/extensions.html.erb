@@ -1,1 +1,19 @@
-<%= link_to 'Install extension', '/trello_track.crx' %>
+<h1>Google chrome extension</h1>
+
+<h3>Download and install</h3>
+
+<p>Download the extension, open chrome extension settings and drag&amp;drop downloaded file into the page, as shown in video below.</p>
+
+<p>Download link: <%= link_to 'extension', '/trello_track.crx' %></p>
+
+<iframe width="853" height="480" src="//www.youtube-nocookie.com/embed/JcGxF20aIC4?rel=0" frameborder="0" allowfullscreen>
+</iframe>
+
+<h3>Setup</h3>
+<p>
+Open extension's options page and copy&amp;paste in these values:
+<ul>
+  <li>Trello Tracker URL: <%= root_url[0...-1] %></li>
+  <li>Trello Tracker api key: <%= current_user.api_key %></li>
+</ul>
+</p>
