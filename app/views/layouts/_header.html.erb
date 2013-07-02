@@ -15,7 +15,10 @@
         </ul>
         <ul class="nav pull-right">
           <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><%= gravatar_image_tag(current_user.email, gravatar: { size: 35 }, class: 'gravatar') %> <b class="caret"></b></a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <%= image_tag(avatar_url(current_user.avatar_hash),:alt => current_user.name, :width => 35, :height => 35, class: 'gravatar') %>
+              <b class="caret"></b>
+            </a>
             <ul class="dropdown-menu">
               <li class="nav-header"><%= current_user.name %></li>
               <li class="divider"></li>

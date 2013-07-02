@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def avatar_url(hash)
+    "https://trello-avatars.s3.amazonaws.com/#{hash}/50.png"
+  end
+
   def today_date (date = Time.zone.now)
     {year: date.year, month: date.month, day: date.day}
   end

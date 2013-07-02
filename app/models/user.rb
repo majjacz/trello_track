@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
       user.email = auth["info"]["email"]
       user.name = auth["info"]["name"]
       user.oauth_hash = auth
+      user.avatar_hash = auth["extra"]["raw_info"]["avatarHash"]
       user.api_key = SecureRandom.hex
     end
   end
